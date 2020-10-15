@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Multi Notes</string>
-    <string name="edit">Edit...</string>
+    <string name="edit">Edit</string>
     <string name="about">About</string>
+    <string name="textview">Multi Notes</string>
+    <string name="version_1_0">Version 1.0</string>
 </resources>

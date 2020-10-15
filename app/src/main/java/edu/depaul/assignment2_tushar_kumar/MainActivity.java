@@ -28,15 +28,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_edit:
                 return true;
             case R.id.menu_about:
-                //openAboutActivity();
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void openAboutActivity(View v){
-        Intent intent = new Intent(MainActivity.this, AboutActivity.class);
-        startActivity(intent);
-    }
-};
+}
