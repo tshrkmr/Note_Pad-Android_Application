@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/dateTextview"
+        android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -32,7 +32,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@+id/noteTitleTextView"
         app:layout_constraintStart_toStartOf="@+id/noteTitleTextView"
-        app:layout_constraintTop_toBottomOf="@+id/dateTextview" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

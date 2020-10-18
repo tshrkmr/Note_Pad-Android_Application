@@ -17,6 +17,6 @@ public class NoteEntryViewHolder extends RecyclerView.ViewHolder {
 
         noteTitle = itemView.findViewById(R.id.noteTitleTextView);
         note = itemView.findViewById(R.id.noteTextView);
-        date = itemView.findViewById(R.id.dateTextview);
+        date = itemView.findViewById(R.id.recyclerView);
     }
 }

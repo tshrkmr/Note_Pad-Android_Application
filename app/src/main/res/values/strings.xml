@@ -4,4 +4,5 @@
     <string name="about">About</string>
     <string name="textview">Multi Notes</string>
     <string name="version_1_0">Version 1.0</string>
+    <string name="save">Save</string>
 </resources>
