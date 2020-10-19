@@ -1,8 +1,9 @@
 package edu.depaul.assignment2_tushar_kumar;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Note {
+public class Note implements Serializable  {
     private String noteTitle;
     private String noteContent;
     private Date date;

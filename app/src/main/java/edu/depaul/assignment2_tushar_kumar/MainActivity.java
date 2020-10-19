@@ -18,15 +18,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private RecyclerView recyclerView;
     private final List<Note> noteList = new ArrayList<>();
+    private static final int Edit_Request_code = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        for (int i = 0; i < 20; i++) {
-            noteList.add(new Note("hello", "hello", new Date()));
-        }
 
         recyclerView = findViewById(R.id.recyclerView);
         NoteAdapter noteAdapter = new NoteAdapter(noteList, this);
@@ -52,6 +49,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode ==Edit_Request_code){
+            if(resultCode == RESULT_OK){
+                Note note = (Note) data.getSerializableExtra("NOTE");
+            }
         }
     }
 
