@@ -1,6 +1,8 @@
 package edu.depaul.assignment2_tushar_kumar;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Note implements Serializable  {
@@ -13,14 +15,6 @@ public class Note implements Serializable  {
         this.noteContent = content;
         this.date = new Date();
     }
-
-//    public void setNoteTitle(String title){
-//        this.noteTitle = title;
-//    }
-//
-//    public void setNoteContent(String content){
-//        this.noteContent = content;
-//    }
 
     public void setDate(long timeMilliSeconds){
         this.date = new Date(timeMilliSeconds);

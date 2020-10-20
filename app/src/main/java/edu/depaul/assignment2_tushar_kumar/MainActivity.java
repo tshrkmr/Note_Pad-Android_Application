@@ -1,12 +1,10 @@
 package edu.depaul.assignment2_tushar_kumar;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +13,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,7 +22,6 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
@@ -54,10 +50,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(noteAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         loadFile();
-        if(noteList.size()>0){
-            getSupportActionBar().setTitle(getString(R.string.app_name) + " (" + noteList.size() + ")");
-        }
-        noteAdapter.notifyDataSetChanged();
+        updateActionBar();
+    }
+
+    @Override
+    protected void onResume() {
+        updateActionBar();
+        super.onResume();
     }
 
     @Override
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(
-            int requestCode, int resultCode, @Nullable Intent data) {
+            int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //Log.d(TAG, "onActivityResult: OnActivityResult Called");
         if(requestCode == Request_Code){
@@ -97,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Note note = (Note) data.getSerializableExtra("Note");
                 String result = data.getStringExtra("Result");
                 if(result.equals("NewNote")){
-                    Toast.makeText(this, "New Note", Toast.LENGTH_SHORT).show();
                     noteList.add(0, note);
                     noteAdapter.notifyDataSetChanged();
                     //Log.d(TAG, "onActivityResult: "+ note.toString());
@@ -133,10 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.setPositiveButton("Yes", (dialogInterface, i) -> {
             //Note selectedNote = noteList.get(position);
             noteList.remove(position);
-            if(noteList.size()>0){
-                getSupportActionBar().setTitle(getString(R.string.app_name) + " (" + noteList.size() + ")");
-            }
-            noteAdapter.notifyDataSetChanged();
+           updateActionBar();
         });
 
         builder.setNegativeButton("No", (dialogInterface, i) -> {
@@ -144,6 +139,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AlertDialog dialog = builder.create();
         dialog.show();
         return false;
+    }
+
+    private void updateActionBar(){
+        if(noteList.size()>0){
+            getSupportActionBar().setTitle(getString(R.string.app_name) + " (" + noteList.size() + ")");
+        }
+        noteAdapter.notifyDataSetChanged();
     }
 
     private void saveFile(){

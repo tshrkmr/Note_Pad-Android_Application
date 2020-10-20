@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class EditActivity extends AppCompatActivity {
@@ -114,4 +115,10 @@ public class EditActivity extends AppCompatActivity {
     public String content() {
         return content = editNoteContent.getText().toString();
     }
+
+//        public Date formatDate(){
+//        Date date = new Date();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM d, h:mm a");
+//        return dateFormat.format(date);
+//    }
 }
