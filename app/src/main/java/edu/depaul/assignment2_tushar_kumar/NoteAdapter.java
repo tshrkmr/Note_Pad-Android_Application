@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Date;
 import java.util.List;
+import java.text.SimpleDateFormat;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteEntryViewHolder> {
 
@@ -36,6 +37,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteEntryViewHolder> {
         holder.noteTitle.setText(n.getTitle());
         holder.note.setText(n.getContent());
         holder.date.setText(n.getDate().toString());
+
+        String content = n.getContent();
+        if(content.length()>80){
+            content = n.getContent().substring(0, 79)+"...";
+        }
+        else {
+            content = n.getContent();
+        }
+        holder.note.setText(content);
     }
 
     @Override

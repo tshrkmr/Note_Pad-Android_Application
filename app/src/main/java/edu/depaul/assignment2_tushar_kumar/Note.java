@@ -14,13 +14,13 @@ public class Note implements Serializable  {
         this.date = new Date();
     }
 
-    public void setNoteTitle(String title){
-        this.noteTitle = title;
-    }
-
-    public void setNoteContent(String content){
-        this.noteContent = content;
-    }
+//    public void setNoteTitle(String title){
+//        this.noteTitle = title;
+//    }
+//
+//    public void setNoteContent(String content){
+//        this.noteContent = content;
+//    }
 
     public void setDate(long timeMilliSeconds){
         this.date = new Date(timeMilliSeconds);

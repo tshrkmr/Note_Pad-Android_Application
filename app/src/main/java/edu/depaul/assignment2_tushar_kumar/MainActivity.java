@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        for (int i = 0; i < 5; i++) {
-            Note n = new Note(
-                    "This is note " + (i+1),
-                    "This text is the content of note number " + (i+1));
-            noteList.add(n);
-        }
+//        for (int i = 0; i < 5; i++) {
+//            Note n = new Note(
+//                    "This is note " + (i+1),
+//                    "This text is the content of note number " + (i+1));
+//            noteList.add(n);
+//        }
         recyclerView = findViewById(R.id.recyclerView);
 
         noteAdapter = new NoteAdapter(noteList, this);
@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onLongClick(View view) {
+
         return false;
     }
 

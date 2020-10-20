@@ -32,12 +32,12 @@ public class EditActivity extends AppCompatActivity {
 
         editNoteContent.setMovementMethod(new ScrollingMovementMethod());
         Intent intent = getIntent();
-        if(intent.hasExtra(title)){
+        if(intent.hasExtra("title")){
             clickedTitle = intent.getStringExtra("title");
             editNoteTitle.setText(clickedTitle);
             Log.d(TAG, "onCreate: " + clickedTitle);
         }
-        if(intent.hasExtra(content)){
+        if(intent.hasExtra("content")){
             clickedContent = intent.getStringExtra("content");
             editNoteContent.setText(clickedContent);
         }
