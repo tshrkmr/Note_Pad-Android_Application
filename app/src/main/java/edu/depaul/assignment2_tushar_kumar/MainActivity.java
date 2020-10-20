@@ -1,6 +1,7 @@
 package edu.depaul.assignment2_tushar_kumar;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(noteAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         loadFile();
+        if(noteList.size()>0){
+            getSupportActionBar().setTitle(getString(R.string.app_name) + " (" + noteList.size() + ")");
+        }
+        noteAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -122,7 +127,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onLongClick(View view) {
+        position = recyclerView.getChildLayoutPosition(view);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Note " + noteList.get(position).getTitle() + "?");
+        builder.setPositiveButton("Yes", (dialogInterface, i) -> {
+            //Note selectedNote = noteList.get(position);
+            noteList.remove(position);
+            if(noteList.size()>0){
+                getSupportActionBar().setTitle(getString(R.string.app_name) + " (" + noteList.size() + ")");
+            }
+            noteAdapter.notifyDataSetChanged();
+        });
 
+        builder.setNegativeButton("No", (dialogInterface, i) -> {
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
         return false;
     }
 

@@ -72,18 +72,13 @@ public class EditActivity extends AppCompatActivity {
         else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Your note is not saved!");
-            builder.setMessage("Save Note?");
+            builder.setMessage("Save Note " + title() +"?");
             builder.setPositiveButton("Yes", (dialogInterface, i) -> {
                 save(title(), content());
                 Log.d(TAG, "onClick: Hello");
             });
 
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    finish();
-                }
-            });
+            builder.setNegativeButton("No", (dialogInterface, i) -> finish());
             AlertDialog dialog = builder.create();
             dialog.show();
         }
