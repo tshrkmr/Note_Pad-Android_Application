@@ -17,12 +17,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteEntryViewHolder> {
 
     NoteAdapter(List<Note> list, MainActivity ma){
         this.noteList = list;
-        this.mainAct = ma;
+        mainAct = ma;
     }
 
     @NonNull
     @Override
-    public NoteEntryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NoteEntryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_list_entry, parent, false);
         itemView.setOnClickListener(mainAct);
@@ -35,7 +35,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteEntryViewHolder> {
         Note n = noteList.get(position);
         holder.noteTitle.setText(n.getTitle());
         holder.note.setText(n.getContent());
-        holder.date.setText(new Date().toString());
+        holder.date.setText(n.getDate().toString());
     }
 
     @Override

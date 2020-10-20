@@ -12,7 +12,7 @@ public class NoteEntryViewHolder extends RecyclerView.ViewHolder {
     TextView date;
     TextView note;
 
-    public NoteEntryViewHolder(@NonNull View itemView) {
+    public NoteEntryViewHolder(View itemView) {
         super(itemView);
 
         noteTitle = itemView.findViewById(R.id.noteTitleTextView);

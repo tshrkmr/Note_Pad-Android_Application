@@ -8,10 +8,10 @@ public class Note implements Serializable  {
     private String noteContent;
     private Date date;
 
-    Note(String title, String content, Date date){
+    Note(String title, String content){
         this.noteTitle = title;
         this.noteContent = content;
-        this.date = date;
+        this.date = new Date();
     }
 
     public void setNoteTitle(String title){
@@ -22,9 +22,10 @@ public class Note implements Serializable  {
         this.noteContent = content;
     }
 
-    public void setDate(Date date){
-        this.date = date;
+    public void setDate(long timeMilliSeconds){
+        this.date = new Date(timeMilliSeconds);
     }
+
     public String getTitle(){
         return noteTitle;
     }
@@ -35,5 +36,10 @@ public class Note implements Serializable  {
 
     public Date getDate(){
         return date;
+    }
+
+    @Override
+    public String toString() {
+        return "\n" + noteTitle + " | " + noteContent + " | " + date;
     }
 }
