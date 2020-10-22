@@ -1,35 +1,32 @@
 package edu.depaul.assignment2_tushar_kumar;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Note implements Serializable  {
     private String noteTitle;
     private String noteContent;
-    private Date date;
-
-    Note(String title, String content){
+    private String date;
+    private static final String TAG = "Note";
+    Note(String title, String content, String date){
         this.noteTitle = title;
         this.noteContent = content;
-        this.date = new Date();
+        this.date = date;
     }
 
-    public void setDate(long timeMilliSeconds){
-        this.date = new Date(timeMilliSeconds);
-    }
+//    public void setDate(long timeMilliSeconds){
+//        this.date = new Date(timeMilliSeconds);
+//    }
 
     public String getTitle(){
-        return noteTitle;
+        return this.noteTitle;
     }
 
     public String getContent(){
-        return noteContent;
+        return this.noteContent;
     }
 
-    public Date getDate(){
-        return date;
+    public String getDate(){
+        return this.date;
     }
 
     @Override

@@ -36,7 +36,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteEntryViewHolder> {
         Note n = noteList.get(position);
         holder.noteTitle.setText(n.getTitle());
         holder.note.setText(n.getContent());
-        holder.date.setText(n.getDate().toString());
+        holder.date.setText(n.getDate());
 
         String content = n.getContent();
         if(content.length()>80){

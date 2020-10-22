@@ -3,7 +3,6 @@ package edu.depaul.assignment2_tushar_kumar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -20,7 +19,8 @@ public class EditActivity extends AppCompatActivity {
 
     private EditText editNoteContent;
     private EditText editNoteTitle;
-    private String clickedTitle = "", clickedContent = "", title, content;
+    private String clickedTitle = "";
+    private String clickedContent = "";
     private static final String TAG = "EditActivity";
 
     @Override
@@ -32,11 +32,11 @@ public class EditActivity extends AppCompatActivity {
         editNoteTitle = findViewById(R.id.editNoteTitle);
 
         editNoteContent.setMovementMethod(new ScrollingMovementMethod());
+
         Intent intent = getIntent();
         if(intent.hasExtra("title")){
             clickedTitle = intent.getStringExtra("title");
             editNoteTitle.setText(clickedTitle);
-            Log.d(TAG, "onCreate: " + clickedTitle);
         }
         if(intent.hasExtra("content")){
             clickedContent = intent.getStringExtra("content");
@@ -51,74 +51,70 @@ public class EditActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.edit_save:
-                save(title(), content());
-                //Log.d(TAG, "onOptionsItemSelected: " + title() + " " + content());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.edit_save) {
+            save();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        if (title().trim().isEmpty()) {
-            Toast.makeText(this, "Title Needed To Save", Toast.LENGTH_LONG).show();
+        if(checkNote()) {
             super.onBackPressed();
-        }
-        else if(title().equals(clickedTitle) && content().equals(clickedContent)){
-            super.onBackPressed();
-        }
-        else {
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Your note is not saved!");
-            builder.setMessage("Save Note " + title() +"?");
-            builder.setPositiveButton("Yes", (dialogInterface, i) -> {
-                save(title(), content());
-                Log.d(TAG, "onClick: Hello");
-            });
+            builder.setMessage("Save Note '" + title() +"'?");
+            builder.setPositiveButton("Yes", (dialogInterface, i) -> returnNote());
 
-            builder.setNegativeButton("No", (dialogInterface, i) -> finish());
+            builder.setNegativeButton("No", (dialogInterface, i) -> super.onBackPressed());
             AlertDialog dialog = builder.create();
             dialog.show();
         }
     }
 
-    public void save(String title, String content) {
-        if(title().trim().isEmpty()){
-            Toast.makeText(this, "Title Needed To Save", Toast.LENGTH_LONG).show();
-            finish();
-        }
-        else if (title().equals(clickedTitle) && content().equals(clickedContent)) {
+    private void save() {
+        if(checkNote()){
             finish();
         }else
-            {
-            Note note = new Note(title, content);
-            Intent intent = new Intent();
-            intent.putExtra("Note", note);
-            if (clickedTitle.trim().isEmpty() && clickedContent.trim().isEmpty())
-                intent.putExtra("Result", "NewNote");
-            else
-                intent.putExtra("Result", "EditedNote");
-            setResult(RESULT_OK, intent);
-            Log.d(TAG, "save: " + note.toString());
-            finish();
+            returnNote();
+    }
+
+    private boolean checkNote(){
+        if(title().trim().isEmpty()){
+            Toast.makeText(this, "Title Needed To Save", Toast.LENGTH_LONG).show();
+            return true;
         }
+        else return title().equals(clickedTitle) && content().equals(clickedContent);
+    }
+
+    private void returnNote(){
+        Note note = new Note(title(), content(), formatDate());
+        Intent intent = new Intent();
+        intent.putExtra("Note", note);
+        if (clickedTitle.trim().isEmpty() && clickedContent.trim().isEmpty())
+            intent.putExtra("Result", "NewNote");
+        else
+            intent.putExtra("Result", "EditedNote");
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 
-    public String title() {
-        return title = editNoteTitle.getText().toString();
+    private String title() {
+        String title = editNoteTitle.getText().toString();
+        return title ;
     }
 
-    public String content() {
-        return content = editNoteContent.getText().toString();
+    private String content() {
+        String content = editNoteContent.getText().toString();
+        return content ;
     }
 
-//        public Date formatDate(){
-//        Date date = new Date();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM d, h:mm a");
-//        return dateFormat.format(date);
-//    }
+    private String formatDate(){
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM d, h:mm a");
+        return dateFormat.format(date);
+    }
 }

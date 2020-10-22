@@ -73,24 +73,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_edit:
-                openEditActivity();;
-                return true;
-            case R.id.menu_about:
-                Intent intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_edit) {
+            openEditActivity();
+            return true;
+        } else if (itemId == R.id.menu_about) {
+            openAboutActivity();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onActivityResult(
             int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //Log.d(TAG, "onActivityResult: OnActivityResult Called");
         if(requestCode == Request_Code){
             if(resultCode == RESULT_OK){
                 Note note = (Note) data.getSerializableExtra("Note");
@@ -98,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(result.equals("NewNote")){
                     noteList.add(0, note);
                     noteAdapter.notifyDataSetChanged();
-                    //Log.d(TAG, "onActivityResult: "+ note.toString());
                 }
                 if(result.equals("EditedNote")){
                     noteList.remove(position);
@@ -118,22 +114,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(intent, Request_Code);
     }
 
-    private void openEditActivity(){
-        Intent intent = new Intent(this, EditActivity.class);
-        startActivityForResult(intent, Request_Code);
-    }
-
     @Override
     public boolean onLongClick(View view) {
         position = recyclerView.getChildLayoutPosition(view);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete Note " + noteList.get(position).getTitle() + "?");
+        builder.setTitle("Delete Note '" + noteList.get(position).getTitle() + "'?");
         builder.setPositiveButton("Yes", (dialogInterface, i) -> {
-            //Note selectedNote = noteList.get(position);
             noteList.remove(position);
-           updateActionBar();
+            updateActionBar();
         });
-
         builder.setNegativeButton("No", (dialogInterface, i) -> {
         });
         AlertDialog dialog = builder.create();
@@ -142,10 +131,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateActionBar(){
-        if(noteList.size()>0){
+        if(noteList.size() <= 0){
+            getSupportActionBar().setTitle(getString(R.string.app_name));
+        }else{
             getSupportActionBar().setTitle(getString(R.string.app_name) + " (" + noteList.size() + ")");
         }
         noteAdapter.notifyDataSetChanged();
+    }
+
+    private void openEditActivity(){
+        Intent intent = new Intent(this, EditActivity.class);
+        startActivityForResult(intent, Request_Code);
+    }
+
+    private void openAboutActivity(){
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
     }
 
     private void saveFile(){
@@ -161,12 +162,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 writer.beginObject();
                 writer.name("title").value(n.getTitle());
                 writer.name("text").value(n.getContent());
-                writer.name("lastDate").value(n.getDate().getTime());
+                Log.d(TAG, "saveFile: " + n.getDate());
+                writer.name("lastDate").value(n.getDate());
                 writer.endObject();
             }
             writer.endArray();
             writer.close();
-            //Log.d(TAG, "saveFile: " + noteList);
+            Log.d(TAG, "saveFile: " + noteList.toString());
         } catch (Exception e) {
             e.printStackTrace();
             Log.d(TAG, "writeJSONData: " + e.getMessage());
@@ -193,14 +195,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // Access note data fields
                 String title = nObj.getString("title");
                 String text = nObj.getString("text");
-                long dateMS = nObj.getLong("lastDate");
-
+                String dateMs = nObj.getString("lastDate");
+                Log.d(TAG, "loadFile: " + dateMs);
                 // Create Note and add to ArrayList
-                Note n = new Note(title, text);
-                n.setDate(dateMS);
+                Note n = new Note(title, text, dateMs);
+                //n.setDate(dateMS);
                 noteList.add(n);
             }
-            //Log.d(TAG, "readJSONData: " + noteList);
+            Log.d(TAG, "readJSONData: " + noteList.toString());
 
         } catch (Exception e) {
             e.printStackTrace();
